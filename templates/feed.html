@@ -1,0 +1,17 @@
+<h1>Лента</h1>
+<a href="{% url 'add_post' %}">Добавить пост</a>
+<hr>
+{% for post in posts %}
+  <div>
+    <p><b>{{ post.author.username }}</b></p>
+    <img src="{{ post.image.url }}" width="300"><br>
+    <p>{{ post.caption }}</p>
+    <form method="post" action="{% url 'like_post' post.id %}">
+      {% csrf_token %}
+      <button type="submit">
+        ❤️ {{ post.likes.count }}
+      </button>
+    </form>
+    <hr>
+  </div>
+{% endfor %}

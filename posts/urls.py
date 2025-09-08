@@ -1,5 +1,8 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
+from .views import PostViewSet, LikeViewSet
 
-urlpatterns = [
-    # сюда позже добавим API для постов
-]
+router = DefaultRouter()
+router.register(r'posts', PostViewSet, basename='post')
+router.register(r'likes', LikeViewSet, basename='like')
+
+urlpatterns = router.urls
