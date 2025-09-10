@@ -5,7 +5,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-# Swagger schema
 schema_view = get_schema_view(
     openapi.Info(
         title="Mini Instagram API",
@@ -13,22 +12,18 @@ schema_view = get_schema_view(
         description="Документация API для мини-инстаграма",
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=[permissions.AllowAny],
+
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # JWT авторизация
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-
-    # Swagger / Redoc
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc'),
-
-    # Основное API
-    path('api/', include('posts.urls')),
+    path("api/accounts/", include("accounts.urls")),
+    path("api/posts/", include("posts.urls")),
 ]
 
 from django.conf import settings
